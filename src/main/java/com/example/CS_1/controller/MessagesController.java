@@ -98,5 +98,37 @@ public class MessagesController {
         }
         return "redirect:/messages/permission/{id}";
     }
+
+
+
+    // Wyświetlenie formularza edycji wiadomości
+    @GetMapping("/messages/edit/{id}")
+    public String showEditForm(@PathVariable Long id, Model model, Principal principal) {
+        Message message = messageService.findById(id);
+
+        String username = principal.getName();
+        User userPrincipal = userService.findUserByUsername(username);
+
+        if (message != null && (message.getAllowedUsers().contains(userPrincipal) || message.getUser().equals(userPrincipal))) {
+            model.addAttribute("message", message); // Przekazanie wiadomości do formularza
+            return "message-edit-form"; // Wskaż nazwę szablonu
+        }
+        return "redirect:/messages"; // Jeśli wiadomość nie istnieje, przekieruj do listy wiadomości
+    }
+
+    // Obsługa formularza edycji wiadomości
+    @PostMapping("/messages/edit/{id}")
+    public String editMessage(@PathVariable Long id, @RequestParam String text, Principal principal) {
+        Message message = messageService.findById(id);
+
+        String username = principal.getName();
+        User userPrincipal = userService.findUserByUsername(username);
+
+        if (message != null && (message.getAllowedUsers().contains(userPrincipal) || message.getUser().equals(userPrincipal))) {
+            message.setText(text); // Ustaw nowy tekst wiadomości
+            messageService.save(message); // Zapisz zmiany w wiadomości
+        }
+        return "redirect:/messages"; // Po zapisaniu zmian, przekierowanie do listy wiadomości
+    }
 }
 

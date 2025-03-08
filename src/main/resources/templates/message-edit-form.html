@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edytuj wiadomość</title>
+</head>
+<body>
+<h2>Edytuj wiadomość</h2>
+<form th:action="@{/messages/edit/{id}(id=${message.id})}" method="post">
+    <div>
+        <label for="text">Treść wiadomości:</label>
+        <textarea name="text" id="text" rows="5" cols="40" th:text="${message.text}"></textarea>
+    </div>
+    <div>
+        <button type="submit">Zapisz zmiany</button>
+    </div>
+</form>
+<a href="/messages">Powrót do wiadomości</a>
+</body>
+</html>
