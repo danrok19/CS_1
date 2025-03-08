@@ -7,7 +7,7 @@ import java.util.List;
 
 
 @Entity
-@Table(name = "\"user\"")
+@Table(name = "users")
 public class User {
 
     @Id
@@ -24,8 +24,19 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @OneToMany(mappedBy = "owner")
+    @Column(name = "enabled")
+    private boolean enabled;
+
+    @OneToMany(mappedBy = "user")
     private List<Message> messages;
+
+    @ManyToMany
+    @JoinTable(
+            name = "message_permissions",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "message_id")
+    )
+    private List<Message> allowedMessages;
 
     public User() {}
 
@@ -40,6 +51,13 @@ public class User {
             messages = new ArrayList<>();
         }
         messages.add(message);
+    }
+
+    public void addPermission(Message message) {
+        if (allowedMessages == null) {
+            allowedMessages = new ArrayList<>();
+        }
+        allowedMessages.add(message);
     }
 
     public long getId() {
@@ -80,6 +98,14 @@ public class User {
 
     public void setMessages(List<Message> messages) {
         this.messages = messages;
+    }
+
+    public List<Message> getAllowedMessages() {
+        return allowedMessages;
+    }
+
+    public void setAllowedMessages(List<Message> allowedMessages) {
+        this.allowedMessages = allowedMessages;
     }
 
     @Override

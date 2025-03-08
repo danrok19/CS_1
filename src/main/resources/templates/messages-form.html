@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>Dodaj nową wiadomość</h3>
+<form method="post" action="/messages/add">
+    <label for="messageText">Treść wiadomości:</label>
+    <input type="text" id="messageText" name="text" required>
+    <button type="submit">Dodaj</button>
+</form>
+</body>
+</html>

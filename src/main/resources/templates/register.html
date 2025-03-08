@@ -6,6 +6,7 @@
 <body>
 <h2>Rejestracja</h2>
 <form th:action="@{/register}" th:object="${user}" method="post">
+    <label>Email: <input type="email" th:field="*{email}" required></label><br>
     <label>Login: <input type="text" th:field="*{username}" required></label><br>
     <label>Hasło: <input type="password" th:field="*{password}" required></label><br>
     <button type="submit">Zarejestruj</button>

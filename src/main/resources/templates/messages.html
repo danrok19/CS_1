@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista Wiadomości</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid black; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .actions { display: flex; gap: 10px; }
+    </style>
+</head>
+<body>
+
+<h2>Lista Wiadomości</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Autor</th>
+        <th>Treść</th>
+        <th>Akcje</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="message : ${messages}">
+        <td th:text="${message.id}"></td>
+        <td th:text="${message.user.username}"></td>
+        <td th:text="${message.text}"></td>
+        <td class="actions">
+            <a th:href="@{/messages/edit/{id}(id=${message.id})}">Edytuj</a>
+            <a th:href="@{/messages/permission/{id}(id=${message.id})}">Uprawnienia</a>
+            <a th:href="@{/messages/delete/{id}(id=${message.id})}" onclick="return confirm('Na pewno usunąć?')">Usuń</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<br>
+<a href="messages-form">Dodaj nową wiadomość</a>
+
+</body>
+</html>

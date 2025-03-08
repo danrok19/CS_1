@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Uprawnienia do edycji wiadomości</title>
+</head>
+<body>
+<h2>Uprawnienia edycji wiadomości</h2>
+
+<h3>Wiadomość: <span th:text="${message.text}"></span></h3>
+
+<h4>Uprawnieni użytkownicy:</h4>
+<ul>
+    <li th:each="user : ${message.allowedUsers}">
+        <span th:text="${user.username}"></span>
+        <form th:action="@{/messages/removePermission/{id}(id=${message.id})}" method="post">
+            <input type="hidden" name="userId" th:value="${user.id}" />
+            <button type="submit">Usuń uprawnienie</button>
+        </form>
+    </li>
+</ul>
+
+<h4>Dodaj nowego użytkownika:</h4>
+<form th:action="@{/messages/addPermission/{id}(id=${message.id})}" method="post">
+    <label for="userId">Wybierz użytkownika:</label>
+    <select name="userId" id="userId">
+        <option th:each="user : ${allUsers}" th:value="${user.id}" th:text="${user.username}"></option>
+    </select>
+    <button type="submit">Dodaj uprawnienie</button>
+</form>
+
+<a href="/messages">Powrót do wiadomości</a>
+</body>
+</html>
