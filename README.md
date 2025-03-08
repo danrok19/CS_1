@@ -1,6 +1,6 @@
 # Simple program for subject(IT studies) Cybersecurity
 
-An Internet application allowing CRUD operations for users on messages
+An Internet application allowing CRUD operations for users with messages
 
 ##  Main technologies in this part of app
 
